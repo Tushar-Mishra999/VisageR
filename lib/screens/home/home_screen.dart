@@ -1,6 +1,8 @@
+import 'package:facialrecognition_attendance/screens/auth/login_screen.dart';
+import 'package:facialrecognition_attendance/screens/auth/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'components/rounded_button.dart';
+import '../../components/rounded_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,16 +26,30 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.07,
             ),
-            RoundedButton(title:"LOGIN",size: size,func: (){},),
+            RoundedButton(
+              title: "LOGIN",
+              size: size,
+              func: () {
+                Navigator.push(
+                  context,MaterialPageRoute(builder: (context)=>LoginScreen())
+                );
+              },
+            ),
             SizedBox(
               height: size.height * 0.01,
             ),
-            RoundedButton(title:"SIGNUP",size: size,func: (){},),
+            RoundedButton(
+              title: "SIGNUP",
+              size: size,
+              func: () {
+                Navigator.push(
+                  context,MaterialPageRoute(builder: (context)=>const RegistrationScreen())
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-

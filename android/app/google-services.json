@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "628667511080",
+    "project_id": "face-rec-attendance-aa2fd",
+    "storage_bucket": "face-rec-attendance-aa2fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628667511080:android:13a1f49a14e995ea6de01d",
+        "android_client_info": {
+          "package_name": "com.example.facialrecognition_attendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "628667511080-6i7h7fbrumdmr5g1smdso0uqu6ppp2hj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzfJKz7GoscftFO68-QJ2jUHDLYVIBdUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "628667511080-6i7h7fbrumdmr5g1smdso0uqu6ppp2hj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
