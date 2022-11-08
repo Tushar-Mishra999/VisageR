@@ -1,8 +1,10 @@
 import 'package:facialrecognition_attendance/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui';
 
-import 'components/course_card.dart';
+import '../../../components/course_card.dart';
+import '../../../provider/user_provider.dart';
 
 class StudentHomePage extends StatelessWidget {
   const StudentHomePage({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class StudentHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
@@ -19,16 +22,22 @@ class StudentHomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Hello,",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w800)),
-                Text("Tushar Mishra",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w800)),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text("Hello,",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w800)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(userProvider.user.name,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w800)),
+                ),
                 GridView.builder(
                     shrinkWrap: true,
                     itemCount: 6,

@@ -1,11 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:facialrecognition_attendance/screens/auth/selfie_upload.dart';
 import 'package:facialrecognition_attendance/screens/auth/signup.dart';
-import 'package:facialrecognition_attendance/student_home_page.dart';
+import 'package:facialrecognition_attendance/screens/feature/student/student_home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/rounded_button.dart';
+import '../../provider/user_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,7 +25,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   bool passwordVisible = false;
   final _auth = FirebaseAuth.instance;
-  
+  late final docData;
+  late DocumentSnapshot<Object?> docUser;
+  late var userProvider;
   @override
   void initState() {
     super.initState();
@@ -35,13 +41,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 email: emailController.text, password: passwordController.text)
             .then((uid) async => {
               Fluttertoast.showToast(msg: "Login Successful"),
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const StudentHomePage()), (route) => false),
+              docUser =await FirebaseFirestore.instance.collection('users').doc(emailController.text).get(),
+              docData=docUser.data(),
+              userProvider = Provider.of<UserProvider>(context, listen: false),
+              userProvider.setUser(docData),
+              if(docData['isSelfieUploaded']){
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const StudentHomePage()), (route) => false),
+              }
+              else{
+                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SelfieUpload()), (route) => false),
+              }
+            
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
-
             break;
           case "wrong-password":
             errorMessage = "Your password is wrong.";

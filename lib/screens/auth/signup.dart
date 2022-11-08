@@ -18,6 +18,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
   String? errorMessage;
   final emailController = TextEditingController();
+  final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   Future? myFuture;
@@ -33,7 +34,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
         final docUser =
             FirebaseFirestore.instance.collection('users').doc(email);
-        final emailData = {'email': email, 'count': 0};
+        docUser.get();
+        final emailData = {'email': email,'name':nameController.text, 'isSelfieUploaded': false};
         await docUser.set(emailData);
         Fluttertoast.showToast(msg: "Registration Successful");
         Navigator.pop(context);
@@ -130,6 +132,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       child: TextFormField(
                         autofocus: false,
+                        controller: nameController,
+                        validator: (value) {
+                          RegExp regex = RegExp(r'^.{6,}$');
+                          if (value!.isEmpty) {
+                            return ("Name is required for login");
+                          }
+                        },
+                        onSaved: (value) {
+                          nameController.text = value!;
+                        },
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          prefixIcon: Icon(Icons.person),
+                          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                          hintText: "Name",
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
+                      width: size.width * 0.8,
+                      decoration: BoxDecoration(
+                        color: Colors.pink.shade100,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: TextFormField(
+                        autofocus: false,
                         controller: passwordController,
                         obscureText: true,
                         validator: (value) {
@@ -209,7 +240,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(
-                                context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
                           },
                           child: const Text(
                             "Sign In",
