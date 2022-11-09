@@ -2,20 +2,36 @@ import 'dart:ui';
 
 import 'package:facialrecognition_attendance/screens/feature/student/student_feature.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constants.dart';
 
 class CourseCard extends StatelessWidget {
-  const CourseCard({
-    Key? key,
-  }) : super(key: key);
-
+  const CourseCard(
+      {Key? key,
+      required this.coursename,
+      required this.startime,
+      required this.endtime,
+      required this.batch})
+      : super(key: key);
+  final String coursename;
+  final String startime;
+  final String endtime;
+  final String batch;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => StudentFeature()));
+        int currenthour = DateTime.now().hour;
+        int currentminute = DateTime.now().minute;
+        int slothour = int.parse(startime.split(':')[0]);
+        if ((endtime.split(":")[1] == '55' && currentminute<=55 && currenthour == slothour) &&
+            ((endtime.split(":")[1] == '25'&& currentminute<=25 && currenthour + 1 == slothour))) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => StudentFeature()));
+        } else {
+          Fluttertoast.showToast(msg: "Attendance is currently disabled");
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(5),
@@ -42,7 +58,7 @@ class CourseCard extends StatelessWidget {
                 children: [
                   Center(
                       child: Text(
-                    "CSD 462",
+                    "${coursename}-${batch}",
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -50,7 +66,7 @@ class CourseCard extends StatelessWidget {
                   )),
                   Center(
                     child: Text(
-                      "2:00-3:00",
+                      "$startime-$endtime",
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

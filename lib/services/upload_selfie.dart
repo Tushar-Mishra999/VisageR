@@ -61,3 +61,4 @@ Future<void> uploadSelie(String username, String email, XFile? image) async {
     Fluttertoast.showToast(msg: e.toString());
   }
 }
+
