@@ -1,5 +1,5 @@
 import 'package:facialrecognition_attendance/screens/auth/login_screen.dart';
-import 'package:facialrecognition_attendance/screens/auth/signup.dart';
+import 'package:facialrecognition_attendance/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../components/rounded_button.dart';

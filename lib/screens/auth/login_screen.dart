@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:facialrecognition_attendance/screens/auth/selfie_upload.dart';
-import 'package:facialrecognition_attendance/screens/auth/signup.dart';
+import 'package:facialrecognition_attendance/screens/auth/selfie_upload_screen.dart';
+import 'package:facialrecognition_attendance/screens/auth/signup_screen.dart';
 import 'package:facialrecognition_attendance/screens/feature/student/student_home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

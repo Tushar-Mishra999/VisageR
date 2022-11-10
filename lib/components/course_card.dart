@@ -22,16 +22,16 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        int currenthour = DateTime.now().hour;
-        int currentminute = DateTime.now().minute;
-        int slothour = int.parse(startime.split(':')[0]);
-        if ((endtime.split(":")[1] == '55' && currentminute<=55 && currenthour == slothour) &&
-            ((endtime.split(":")[1] == '25'&& currentminute<=25 && currenthour + 1 == slothour))) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => StudentFeature()));
-        } else {
-          Fluttertoast.showToast(msg: "Attendance is currently disabled");
-        }
+        // int currenthour = DateTime.now().hour;
+        // int currentminute = DateTime.now().minute;
+        // int slothour = int.parse(startime.split(':')[0]);
+        // if ((endtime.split(":")[1] == '55' && currentminute<=55 && currenthour == slothour) &&
+        //     ((endtime.split(":")[1] == '25'&& currentminute<=25 && currenthour + 1 == slothour))) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => StudentFeature(startime: startime,endtime: endtime,)));
+        // } else {
+        //   Fluttertoast.showToast(msg: "Attendance is currently disabled");
+        // }
       },
       child: Container(
         padding: const EdgeInsets.all(5),
