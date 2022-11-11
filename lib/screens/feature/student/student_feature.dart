@@ -75,7 +75,7 @@ class _StudentFeatureState extends State<StudentFeature> {
                         isLoading = true;
                       setState(() {});
                       await markAttendance(
-                          userProvider.user.email, image, context);
+                          userProvider.user.email,userProvider.user.courseId, image, context);
                        isLoading = false;
                       setState(() {});
                     // } else {

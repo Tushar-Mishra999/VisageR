@@ -3,13 +3,16 @@ import 'dart:ui';
 import 'package:facialrecognition_attendance/screens/feature/student/student_feature.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
+import '../provider/user_provider.dart';
 
 class CourseCard extends StatelessWidget {
   const CourseCard(
       {Key? key,
       required this.coursename,
+      required this.courseId,
       required this.startime,
       required this.endtime,
       required this.batch})
@@ -18,12 +21,20 @@ class CourseCard extends StatelessWidget {
   final String startime;
   final String endtime;
   final String batch;
+  final int courseId;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setCourseId(courseId);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => StudentFeature(startime: startime,endtime: endtime,)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => StudentFeature(
+                      startime: startime,
+                      endtime: endtime,
+                    )));
       },
       child: Container(
         padding: const EdgeInsets.all(5),

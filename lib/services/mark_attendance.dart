@@ -5,7 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-Future markAttendance(String email, XFile? image, BuildContext context) async {
+Future markAttendance(
+    String email, int? courseId, XFile? image, BuildContext context) async {
   try {
     var bytes = await image!.readAsBytes();
     String base64Image = base64Encode(bytes);
@@ -16,12 +17,12 @@ Future markAttendance(String email, XFile? image, BuildContext context) async {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: json.encode({'snu_id': email, 'image': base64Image}),
+      body: json.encode(
+          {'snu_id': email, 'course_id': courseId, 'image': base64Image}),
     );
 
     if (res.statusCode == 200) {
-      print(jsonDecode(res.body));
-      Fluttertoast.showToast(msg: "Uploaded Succesfully");
+      Fluttertoast.showToast(msg: json.decode(res.body)['message'].toString().toUpperCase());
     } else {
       Fluttertoast.showToast(msg: "Something went wrong please retry");
     }

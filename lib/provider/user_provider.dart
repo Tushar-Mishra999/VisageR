@@ -1,10 +1,8 @@
 import 'package:facialrecognition_attendance/models/user.dart';
 import 'package:flutter/material.dart';
+
 class UserProvider extends ChangeNotifier {
-  User _user = User(
-    name: '',
-    email: '',
-  );
+  User _user = User(name: '', email: '', courseId: 0);
 
   User get user => _user;
 
@@ -13,4 +11,8 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setCourseId(int courseId) {
+    _user.courseId = courseId;
+    notifyListeners();
+  }
 }

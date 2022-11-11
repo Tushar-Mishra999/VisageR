@@ -71,6 +71,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
                             itemBuilder: (context, index) {
                               return CourseCard(
                                 coursename: courses[index].coursecode,
+                                courseId: courses[index].courseid,
                                 startime: courses[index].starttime,
                                 endtime: courses[index].endtime,
                                 batch: courses[index].batch,
