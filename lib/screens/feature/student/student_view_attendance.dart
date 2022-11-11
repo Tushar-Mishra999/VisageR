@@ -3,8 +3,8 @@ import 'package:pie_chart/pie_chart.dart';
 
 Map<String, double> dataMap = {"Present": 8, "Absent": 2};
 final colorList = <Color>[
-  const Color(0xff002003),
-  const Color(0xffADEFD1)
+  const Color(0xff00203f),
+  const Color(0xffadefd1),
   // const Color(0xff03fc17),
   // const Color(0xfff50a29)
   // const Color(0xfffdcb6e),

@@ -34,10 +34,7 @@ class _SelfieUploadState extends State<SelfieUpload> {
                           try {
                             image = (await ImagePicker().pickImage(
                                 source: ImageSource.camera,
-                                preferredCameraDevice: CameraDevice.front,
-                                imageQuality: 50,
-                                maxHeight: 500.0,
-                                maxWidth: 500.0));
+                                preferredCameraDevice: CameraDevice.front));
                             if (image == null) {
                               return;
                             }
@@ -92,7 +89,7 @@ class _SelfieUploadState extends State<SelfieUpload> {
                                     isLoading = true;
                                     setState(() {});
                                     await uploadSelie(userProvider.user.name,
-                                        userProvider.user.email, image);
+                                        userProvider.user.email, image,context);
                                     isLoading = false;
                                     setState(() {});
                                   })

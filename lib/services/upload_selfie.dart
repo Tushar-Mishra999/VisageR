@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:facialrecognition_attendance/screens/feature/student/student_home_page.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
 
-Future uploadSelie(String username, String email, XFile? image) async {
+Future uploadSelie(String username, String email, XFile? image,BuildContext context) async {
   try {
     // http.Response res = await http.post(
     //   Uri.parse(
@@ -82,6 +84,8 @@ Future uploadSelie(String username, String email, XFile? image) async {
           .collection('users')
           .doc(email)
           .update({"isSelfieUploaded": true});
+            Navigator.push(
+            context, MaterialPageRoute(builder: (context) => StudentHomePage()));
     } else {
       Fluttertoast.showToast(msg: "Something went wrong please retry");
     }
