@@ -21,7 +21,10 @@ Future markAttendance(
     );
 
     if (res.statusCode == 200) {
-      Fluttertoast.showToast(msg: json.decode(res.body)['message'].toString().toUpperCase());
+      Fluttertoast.showToast(
+          msg: json.decode(res.body)['message'].toString().toUpperCase(),
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
     } else {
       Fluttertoast.showToast(msg: "Something went wrong please retry");
     }
