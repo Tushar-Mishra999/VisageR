@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../components/rounded_button.dart';
 import '../../provider/user_provider.dart';
+import '../feature/admin/admin_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -34,24 +35,48 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> signIn() async {
+    var snapShot;
+    bool isAdmin = false;
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
             .signInWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
             .then((uid) async => {
-              Fluttertoast.showToast(msg: "Login Successful"),
-              docUser =await FirebaseFirestore.instance.collection('users').doc(emailController.text).get(),
-              docData=docUser.data(),
-              userProvider = Provider.of<UserProvider>(context, listen: false),
-              userProvider.setUser(docData),
-              if(docData['isSelfieUploaded']){
-                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>const StudentHomePage()), (route) => false),
-              }
-              else{
-                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SelfieUpload()), (route) => false),
-              }
-            
+                    docUser = await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(emailController.text)
+                      .get(),
+                  docData = docUser.data(),
+                  userProvider =
+                      Provider.of<UserProvider>(context, listen: false),
+                  userProvider.setUser(docData),
+
+                  if(!userProvider.user.isAdmin){//for client side
+                  if (docData['isSelfieUploaded'])
+                    {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const StudentHomePage()),
+                          (route) => false),
+                    }
+                  else
+                    {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SelfieUpload()),
+                          (route) => false),
+                    }
+                  }
+                  else{
+                     Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AdminHomeScreen()),
+                          (route) => false),
+                  }
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
@@ -206,7 +231,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         GestureDetector(
                           onTap: () async {
                             Navigator.pushReplacement(
-                                context, MaterialPageRoute(builder: (context)=>const RegistrationScreen()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegistrationScreen()));
                           },
                           child: const Text(
                             "SignUp",

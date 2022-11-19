@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../provider/user_provider.dart';
+import '../screens/feature/admin/admin_feature.dart';
 
 class CourseCard extends StatelessWidget {
   const CourseCard(
@@ -28,6 +29,14 @@ class CourseCard extends StatelessWidget {
       onTap: () {
         final userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setCourseId(courseId);
+        if (userProvider.user.isAdmin) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const AdminFeature(
+                      )));
+          return;
+        }
         Navigator.push(
             context,
             MaterialPageRoute(

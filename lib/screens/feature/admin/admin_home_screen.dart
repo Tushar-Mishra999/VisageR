@@ -1,21 +1,18 @@
-import 'package:facialrecognition_attendance/constants.dart';
 import 'package:facialrecognition_attendance/models/student_course.dart';
 import 'package:facialrecognition_attendance/services/student_features.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui';
-
 import '../../../components/course_card.dart';
 import '../../../provider/user_provider.dart';
 
-class AdminHomePage extends StatefulWidget {
-  const AdminHomePage({Key? key}) : super(key: key);
+class AdminHomeScreen extends StatefulWidget {
+  const AdminHomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<AdminHomePage> createState() => _AdminHomePageState();
+  State<AdminHomeScreen> createState() => _AdminHomePageState();
 }
 
-class _AdminHomePageState extends State<AdminHomePage> {
+class _AdminHomePageState extends State<AdminHomeScreen> {
   List<StudentCourse> courses = [];
 
   @override
@@ -32,7 +29,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.black,
@@ -47,7 +43,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding: EdgeInsets.only(left: 8.0),
                           child: Text("Hello,",
                               style: TextStyle(
                                   color: Colors.white,

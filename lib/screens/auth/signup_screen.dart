@@ -35,7 +35,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         final docUser =
             FirebaseFirestore.instance.collection('users').doc(email);
         docUser.get();
-        final emailData = {'email': email,'name':nameController.text, 'isSelfieUploaded': false};
+        final emailData = {'email': email,'name':nameController.text, 'isSelfieUploaded': false,'isAdmin':false};
         await docUser.set(emailData);
         Fluttertoast.showToast(msg: "Registration Successful");
         Navigator.pop(context);

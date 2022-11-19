@@ -2,7 +2,7 @@ import 'package:facialrecognition_attendance/models/user.dart';
 import 'package:flutter/material.dart';
 
 class UserProvider extends ChangeNotifier {
-  User _user = User(name: '', email: '', courseId: 0);
+  User _user = User(name: '', email: '', courseId: 0,isAdmin: false);
 
   User get user => _user;
 
