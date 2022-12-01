@@ -2,12 +2,16 @@ import 'package:facialrecognition_attendance/constants.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceCard extends StatelessWidget {
-  const AttendanceCard({
-    Key? key,
-    required this.size,
-  }) : super(key: key);
+  const AttendanceCard(
+      {Key? key,
+      required this.size,
+      required this.name,
+      required this.percentage})
+      : super(key: key);
 
   final Size size;
+  final String name;
+  final int percentage;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class AttendanceCard extends StatelessWidget {
                   color: khomecolor,
                   blurRadius: 15.0,
                   spreadRadius: 2.0,
-                  offset: Offset(
+                  offset: const Offset(
                     0.0,
                     3.0,
                   ),
@@ -38,14 +42,14 @@ class AttendanceCard extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 Text(
-                  "TUSHAR MISHRA",
+                  name,
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w600),
                 ),
                 Text(
-                  "70%",
+                  "$percentage%",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.w600),
                 )

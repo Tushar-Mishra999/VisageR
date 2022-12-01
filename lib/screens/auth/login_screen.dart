@@ -34,16 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  Future<void> signIn() async {
-    var snapShot;
-    bool isAdmin = false;
+  Future signIn() async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
             .signInWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
             .then((uid) async => {
-                    docUser = await FirebaseFirestore.instance
+                  docUser = await FirebaseFirestore.instance
                       .collection('users')
                       .doc(emailController.text)
                       .get(),
@@ -51,32 +49,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   userProvider =
                       Provider.of<UserProvider>(context, listen: false),
                   userProvider.setUser(docData),
-
-                  if(!userProvider.user.isAdmin){//for client side
-                  if (docData['isSelfieUploaded'])
+                  if (!userProvider.user.isAdmin)
                     {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const StudentHomePage()),
-                          (route) => false),
+                      //for client side
+                      if (docData['isSelfieUploaded'])
+                        {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const StudentHomePage()),
+                              (route) => false),
+                        }
+                      else
+                        {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SelfieUpload()),
+                              (route) => false),
+                        }
                     }
                   else
                     {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SelfieUpload()),
-                          (route) => false),
-                    }
-                  }
-                  else{
-                     Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
                               builder: (context) => const AdminHomeScreen()),
                           (route) => false),
-                  }
+                    }
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
@@ -114,151 +115,154 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       resizeToAvoidBottomInset: false,
-      body: FutureBuilder(builder: (context, snapshot) {
-        return Stack(children: [
-          Center(
-            child: Form(
-              key: _formKey,
-              child: AutofillGroup(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      padding: const EdgeInsets.all(10),
-                      width: size.width * 0.8,
-                      decoration: BoxDecoration(
-                        color: Colors.pink.shade100,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: TextFormField(
-                          autofocus: false,
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          autofillHints: const [AutofillHints.email],
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return ("Please Enter Your Email");
-                            }
-                            if (!RegExp(
-                                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                                .hasMatch(value)) {
-                              return ("Please Enter a valid email");
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            emailController.text = value!;
-                          },
-                          textInputAction: TextInputAction.next,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon: Icon(Icons.mail),
-                            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                            hintText: "Email",
-                          )),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      padding: const EdgeInsets.all(10),
-                      width: size.width * 0.8,
-                      decoration: BoxDecoration(
-                        color: Colors.pink.shade100,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: TextFormField(
-                        autofocus: false,
-                        controller: passwordController,
-                        obscureText: !passwordVisible,
-                        autofillHints: [AutofillHints.password],
-                        onEditingComplete: () {
-                          TextInput.finishAutofillContext();
-                        },
-                        validator: (value) {
-                          RegExp regex = RegExp(r'^.{6,}$');
-                          if (value!.isEmpty) {
-                            return ("Password is required for login");
-                          }
-                          if (!regex.hasMatch(value)) {
-                            return ("Enter Valid Password(Min. 6 Character)");
-                          }
-                        },
-                        onSaved: (value) {
-                          passwordController.text = value!;
-                        },
-                        textInputAction: TextInputAction.done,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: const Icon(Icons.lock),
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                          hintText: "Password",
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                passwordVisible = !passwordVisible;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                    RoundedButton(
-                        title: "LOGIN",
-                        size: size,
-                        func: () async {
-                          myFuture = signIn();
-                          setState(() {});
-                        }),
-                    SizedBox(
-                      height: size.height * 0.02,
-                    ),
-                    Row(
+      body: FutureBuilder(
+          future: myFuture,
+          builder: (context, snapshot) {
+            return Stack(children: [
+              Center(
+                child: Form(
+                  key: _formKey,
+                  child: AutofillGroup(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Text(
-                          "Don't have an account? ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegistrationScreen()));
-                          },
-                          child: const Text(
-                            "SignUp",
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
+                          width: size.width * 0.8,
+                          decoration: BoxDecoration(
+                            color: Colors.pink.shade100,
+                            borderRadius: BorderRadius.circular(30),
                           ),
+                          child: TextFormField(
+                              autofocus: false,
+                              controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              autofillHints: const [AutofillHints.email],
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return ("Please Enter Your Email");
+                                }
+                                if (!RegExp(
+                                        "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                                    .hasMatch(value)) {
+                                  return ("Please Enter a valid email");
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                emailController.text = value!;
+                              },
+                              textInputAction: TextInputAction.next,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                prefixIcon: Icon(Icons.mail),
+                                contentPadding:
+                                    EdgeInsets.fromLTRB(20, 15, 20, 15),
+                                hintText: "Email",
+                              )),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
+                          width: size.width * 0.8,
+                          decoration: BoxDecoration(
+                            color: Colors.pink.shade100,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: TextFormField(
+                            autofocus: false,
+                            controller: passwordController,
+                            obscureText: !passwordVisible,
+                            autofillHints: [AutofillHints.password],
+                            onEditingComplete: () {
+                              TextInput.finishAutofillContext();
+                            },
+                            validator: (value) {
+                              RegExp regex = RegExp(r'^.{6,}$');
+                              if (value!.isEmpty) {
+                                return ("Password is required for login");
+                              }
+                              if (!regex.hasMatch(value)) {
+                                return ("Enter Valid Password(Min. 6 Character)");
+                              }
+                            },
+                            onSaved: (value) {
+                              passwordController.text = value!;
+                            },
+                            textInputAction: TextInputAction.done,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              prefixIcon: const Icon(Icons.lock),
+                              contentPadding:
+                                  const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                              hintText: "Password",
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    passwordVisible = !passwordVisible;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        RoundedButton(
+                            title: "LOGIN",
+                            size: size,
+                            func: () async {
+                              myFuture = signIn();
+                              setState(() {});
+                            }),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            const Text(
+                              "Don't have an account? ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const RegistrationScreen()));
+                              },
+                              child: const Text(
+                                "SignUp",
+                                style: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          snapshot.connectionState == ConnectionState.waiting
-              ? const Center(
-                  child: CircularProgressIndicator(
-                  color: Colors.purple,
-                ))
-              : Container(),
-        ]);
-      }),
+              snapshot.connectionState == ConnectionState.waiting
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      color: Colors.purple,
+                    ))
+                  : Container(),
+            ]);
+          }),
     );
   }
 }

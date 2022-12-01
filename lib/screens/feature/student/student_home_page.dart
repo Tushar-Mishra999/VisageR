@@ -1,11 +1,15 @@
 import 'package:facialrecognition_attendance/constants.dart';
 import 'package:facialrecognition_attendance/models/student_course.dart';
-import 'package:facialrecognition_attendance/services/student_features.dart';
+import 'package:facialrecognition_attendance/screens/home/home_screen.dart';
+import 'package:facialrecognition_attendance/services/fetch_courses.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui';
 
 import '../../../components/course_card.dart';
+import '../../../components/drawer_tile.dart';
 import '../../../provider/user_provider.dart';
 
 class StudentHomePage extends StatefulWidget {
@@ -32,10 +36,26 @@ class _StudentHomePageState extends State<StudentHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.black,
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerTile(
+                func: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                      (route) => false);
+                },
+                title: 'Log Out',
+                icon: Icons.login_outlined),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: FutureBuilder(
             future: fetchStudentCourses(context),

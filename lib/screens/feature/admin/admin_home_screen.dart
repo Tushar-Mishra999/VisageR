@@ -1,5 +1,5 @@
 import 'package:facialrecognition_attendance/models/student_course.dart';
-import 'package:facialrecognition_attendance/services/student_features.dart';
+import 'package:facialrecognition_attendance/services/fetch_courses.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../components/course_card.dart';

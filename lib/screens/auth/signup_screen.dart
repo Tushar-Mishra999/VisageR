@@ -65,7 +65,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         Fluttertoast.showToast(msg: errorMessage!);
       } catch (e) {
         Fluttertoast.showToast(msg: 'Something went wrong. Please retry.');
-        print(e);
       }
     }
   }
