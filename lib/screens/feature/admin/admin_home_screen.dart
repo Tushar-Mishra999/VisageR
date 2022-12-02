@@ -1,9 +1,12 @@
 import 'package:facialrecognition_attendance/models/student_course.dart';
 import 'package:facialrecognition_attendance/services/fetch_courses.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../components/course_card.dart';
+import '../../../components/drawer_tile.dart';
 import '../../../provider/user_provider.dart';
+import '../../home/home_screen.dart';
 
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({Key? key}) : super(key: key);
@@ -32,6 +35,24 @@ class _AdminHomePageState extends State<AdminHomeScreen> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.black,
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        child: ListView(
+          children: [
+            DrawerTile(
+                func: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                      (route) => false);
+                },
+                title: 'Log Out',
+                icon: Icons.login_outlined),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: FutureBuilder(
             future: fetchStudentCourses(context),

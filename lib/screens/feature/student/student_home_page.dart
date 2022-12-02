@@ -40,6 +40,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       drawer: Drawer(
+        backgroundColor: Colors.black,
         child: ListView(
           children: [
             DrawerTile(
