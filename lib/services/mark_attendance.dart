@@ -22,10 +22,23 @@ Future markAttendance(
 
     if (res.statusCode == 200) {
       Fluttertoast.showToast(
-          msg: json.decode(res.body)['message'].toString().toUpperCase(),
+          msg: "Attendance marked",
           toastLength: Toast.LENGTH_LONG,
           backgroundColor: Colors.purple);
-    } else {
+    }
+    else if (res.statusCode == 401) {
+      Fluttertoast.showToast(
+          msg: "Face not recognised",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
+    }
+    else if (res.statusCode == 403) {
+      Fluttertoast.showToast(
+          msg: "Attendance is currently disabled",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
+    } 
+    else {
       Fluttertoast.showToast(msg: "Something went wrong please retry");
     }
   } catch (e) {

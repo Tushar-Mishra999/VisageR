@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 Map<String, dynamic> attendanceList = {};
 Map<String, double> dataMap = {"Present": 0, "Absent": 0};
 final colorList = <Color>[
-  const Color(0xff00203f),
-  const Color(0xffadefd1),
+  const Color.fromARGB(255, 134, 218, 69),
+  const Color(0xffDC4539),
 ];
 
 class ViewAttendance extends StatefulWidget {

@@ -14,7 +14,7 @@ Future viewAttendance(BuildContext context) async {
     final courseId = userProvider.user.courseId;
     http.Response res = await http.get(
       Uri.parse(
-          'https://4ckwzkvhc1.execute-api.us-east-1.amazonaws.com/default/show_attendance?snu_id=$email&course_id=$courseId'),
+          'https://4ckwzkvhc1.execute-api.us-east-1.amazonaws.com/default/show_attendance?snu_id=$email&course_id=$courseId&type=student'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -23,7 +23,7 @@ Future viewAttendance(BuildContext context) async {
     double present = 0;
     double absent = 0;
     for (var x in jsonData) {
-      if (x["status"] == 1) {
+      if (x["status"]) {
         present++;
       } else {
         absent++;

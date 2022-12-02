@@ -39,45 +39,44 @@ class _AdminFeatureState extends State<AdminFeature> {
                   child: CircularProgressIndicator(
                   color: Colors.purple,
                 ))
-              : SingleChildScrollView(
-                  child: Column(
+              : Column(
+                mainAxisSize: MainAxisSize.min,
+               children: [
+                SizedBox(
+                  height: size.height * 0.06,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    EnableCard(
+                        size: size,
+                        title: "Enable",
+                        color: const Color(0xFF0FFF50)),
                     SizedBox(
-                      height: size.height * 0.06,
+                      width: size.width * 0.1,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        EnableCard(
-                            size: size,
-                            title: "Enable",
-                            color: const Color(0xFF0FFF50)),
-                        SizedBox(
-                          width: size.width * 0.1,
-                        ),
-                        EnableCard(
-                            size: size, title: "Disable", color: Colors.red)
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.1,
-                        ),
-                        ListView.builder(
-                            itemCount: students.length,
-                            itemBuilder: (context, index) {
-                              return AttendanceCard(
-                                size: size,
-                                name: students[index].name,
-                                percentage: students[index].percentage,
-                              );
-                            }),
-                      ],
-                    )
+                    EnableCard(
+                        size: size, title: "Disable", color: Colors.red)
                   ],
-                )),
+                ),
+                 SizedBox(
+                      height: size.height * 0.1,
+                    ),
+                   
+                    Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                          itemCount: students.length,
+                          itemBuilder: (context, index) {
+                            return AttendanceCard(
+                              size: size,
+                              name: students[index].name,
+                              percentage: students[index].percentage,
+                            );
+                          }),
+                    ),
+              ],
+                ),
         ));
   }
 }
