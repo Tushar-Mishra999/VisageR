@@ -87,7 +87,8 @@ Future uploadSelie(String username, String email, XFile? image,BuildContext cont
             Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHomePage()));
     } else {
-      Fluttertoast.showToast(msg: "Something went wrong please retry");
+ Fluttertoast.showToast(msg:'Something went wrong, please try again',toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
     }
   } catch (e) {
     Fluttertoast.showToast(msg: e.toString());

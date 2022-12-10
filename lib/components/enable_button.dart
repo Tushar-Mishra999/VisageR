@@ -17,9 +17,7 @@ class EnableCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        enableAttendance(
-          context,title.toLowerCase()
-        );
+        enableAttendance(context, title.toLowerCase());
       },
       child: Container(
         width: size.width * 0.4,
@@ -35,17 +33,6 @@ class EnableCard extends StatelessWidget {
             borderRadius: const BorderRadius.all(
               Radius.circular(15),
             ),
-            boxShadow: [
-              BoxShadow(
-                color: color,
-                blurRadius: 10.0,
-                spreadRadius: 2.0,
-                offset: const Offset(
-                  0.0,
-                  3.0,
-                ),
-              ),
-            ],
             border: Border.all(color: color, width: 3)),
       ),
     );

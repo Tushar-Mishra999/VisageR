@@ -64,7 +64,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         }
         Fluttertoast.showToast(msg: errorMessage!);
       } catch (e) {
-        Fluttertoast.showToast(msg: 'Something went wrong. Please retry.');
+        Fluttertoast.showToast(msg:'Something went wrong, please try again',toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
       }
     }
   }
