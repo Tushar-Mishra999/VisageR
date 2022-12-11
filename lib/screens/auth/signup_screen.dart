@@ -29,7 +29,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         await _auth
             .createUserWithEmailAndPassword(email: email, password: password)
             .catchError((e) {
-          Fluttertoast.showToast(msg: e!.message);
+          Fluttertoast.showToast(msg: e!.message,toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
         });
 
         final docUser =
@@ -37,7 +38,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         docUser.get();
         final emailData = {'email': email,'name':nameController.text, 'isSelfieUploaded': false,'isAdmin':false};
         await docUser.set(emailData);
-        Fluttertoast.showToast(msg: "Registration Successful");
+        Fluttertoast.showToast(msg: "Registration Successful",toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
         Navigator.pop(context);
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

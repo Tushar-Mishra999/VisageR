@@ -41,13 +41,15 @@ class _SelfieUploadState extends State<SelfieUpload> {
                             var length = await image!.length();
                             if (length > 3670016) {
                               Fluttertoast.showToast(
-                                  msg: "Image size is too big.Please retry");
+                                  msg: "Image size is too big.Please retry",toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
                               return;
                             }
                             setState(() {});
                           } on PlatformException catch (e) {
                             Fluttertoast.showToast(
-                                msg: "Please give necessary permissions");
+                                msg: "Please give necessary permissions",toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
                           }
                         }))
                 : Stack(

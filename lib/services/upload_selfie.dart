@@ -79,7 +79,8 @@ Future uploadSelie(String username, String email, XFile? image,BuildContext cont
 
 
     if (res.statusCode == 200) {
-      Fluttertoast.showToast(msg: "Uploaded Succesfully");
+      Fluttertoast.showToast(msg: "Uploaded Succesfully",toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
       await FirebaseFirestore.instance
           .collection('users')
           .doc(email)
@@ -91,6 +92,7 @@ Future uploadSelie(String username, String email, XFile? image,BuildContext cont
           backgroundColor: Colors.purple);
     }
   } catch (e) {
-    Fluttertoast.showToast(msg: e.toString());
+    Fluttertoast.showToast(msg: e.toString(),toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
   }
 }

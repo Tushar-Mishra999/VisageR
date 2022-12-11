@@ -39,6 +39,7 @@ Future viewAttendance(BuildContext context) async {
           backgroundColor: Colors.purple);
     }
   } catch (e) {
-    Fluttertoast.showToast(msg: e.toString());
+    Fluttertoast.showToast(msg: e.toString(),toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.purple);
   }
 }
