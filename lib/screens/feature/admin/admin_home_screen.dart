@@ -1,3 +1,4 @@
+import 'package:facialrecognition_attendance/constants.dart';
 import 'package:facialrecognition_attendance/models/student_course.dart';
 import 'package:facialrecognition_attendance/services/fetch_courses.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,6 +36,10 @@ class _AdminHomePageState extends State<AdminHomeScreen> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.black,
+      // appBar: AppBar(
+
+      //   iconTheme: IconThemeData(color:khomecolor),
+      // ),
       drawer: Drawer(
         backgroundColor: Colors.black,
         child: ListView(
@@ -63,13 +68,32 @@ class _AdminHomePageState extends State<AdminHomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(left: 8.0),
-                          child: Text("Hello,",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w800)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text("Hello,",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w800)),
+                            ),
+                            IconButton(
+                                onPressed: () async {
+                                  await FirebaseAuth.instance.signOut();
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomeScreen()),
+                                      (route) => false);
+                                },
+                                icon: Icon(
+                                  Icons.logout_outlined,
+                                  color: khomecolor,
+                                ))
+                          ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),

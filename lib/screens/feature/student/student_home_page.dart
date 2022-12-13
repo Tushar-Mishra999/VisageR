@@ -4,10 +4,7 @@ import 'package:facialrecognition_attendance/screens/home/home_screen.dart';
 import 'package:facialrecognition_attendance/services/fetch_courses.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui';
-
 import '../../../components/course_card.dart';
 import '../../../components/drawer_tile.dart';
 import '../../../provider/user_provider.dart';
@@ -39,24 +36,6 @@ class _StudentHomePageState extends State<StudentHomePage> {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.black,
-      drawer: Drawer(
-        backgroundColor: Colors.black,
-        child: ListView(
-          children: [
-            DrawerTile(
-                func: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
-                      (route) => false);
-                },
-                title: 'Log Out',
-                icon: Icons.login_outlined),
-          ],
-        ),
-      ),
       body: SafeArea(
         child: FutureBuilder(
             future: fetchStudentCourses(context),
@@ -67,13 +46,32 @@ class _StudentHomePageState extends State<StudentHomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text("Hello,",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w800)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text("Hello,",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w800)),
+                            ),
+                            IconButton(
+                                onPressed: () async {
+                                  await FirebaseAuth.instance.signOut();
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomeScreen()),
+                                      (route) => false);
+                                },
+                                icon: Icon(
+                                  Icons.logout_outlined,
+                                  color: khomecolor,
+                                ))
+                          ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
