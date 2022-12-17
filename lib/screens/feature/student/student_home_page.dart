@@ -1,5 +1,6 @@
 import 'package:facialrecognition_attendance/constants.dart';
 import 'package:facialrecognition_attendance/models/student_course.dart';
+import 'package:facialrecognition_attendance/screens/feature/student/trial.dart';
 import 'package:facialrecognition_attendance/screens/home/home_screen.dart';
 import 'package:facialrecognition_attendance/services/fetch_courses.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,6 +67,13 @@ class _StudentHomePageState extends State<StudentHomePage> {
                                           builder: (context) =>
                                               const HomeScreen()),
                                       (route) => false);
+
+                                  // Navigator.pushAndRemoveUntil(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             const TrialScreen()),
+                                  //     (route) => false);
                                 },
                                 icon: Icon(
                                   Icons.logout_outlined,

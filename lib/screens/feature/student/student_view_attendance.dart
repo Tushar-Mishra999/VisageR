@@ -1,8 +1,6 @@
-import 'package:facialrecognition_attendance/provider/user_provider.dart';
 import 'package:facialrecognition_attendance/services/view_attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:provider/provider.dart';
 
 Map<String, dynamic> attendanceList = {};
 Map<String, double> dataMap = {"Present": 0, "Absent": 0};

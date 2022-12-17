@@ -21,18 +21,20 @@ Future markAttendance(
       }
     }
 
-    final currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+    final currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best);
 
-    double distanceInMeters = 0;
+    int distanceInMeters = 0;
     distanceInMeters = Geolocator.distanceBetween(
       roomLatitude,
       roomLongitude,
       currentPosition.latitude,
       currentPosition.longitude,
-    );
+    ).toInt();
 
-    Fluttertoast.showToast(msg: "DIstance is $distanceInMeters");
-    if (distanceInMeters / 1000 < 0.5) {
+    Fluttertoast.showToast(msg: "Distance is $distanceInMeters meters");
+
+    if (distanceInMeters / 1000 > 1) {
       Fluttertoast.showToast(
           msg: "Location outside of B-block",
           toastLength: Toast.LENGTH_LONG,

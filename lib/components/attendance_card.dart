@@ -1,4 +1,5 @@
 import 'package:facialrecognition_attendance/constants.dart';
+import 'package:facialrecognition_attendance/services/manual_attendance.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
@@ -36,7 +37,9 @@ class AttendanceCard extends StatelessWidget {
                 Icons.done,
                 color: Colors.green,
               ),
-              onPressed: () {}),
+              onPressed: () async {
+                await toggleAttendance(context,'present',name);
+              }),
           FocusedMenuItem(
               backgroundColor: Colors.black,
               title: Text(
@@ -47,7 +50,9 @@ class AttendanceCard extends StatelessWidget {
                 Icons.cancel_outlined,
                 color: Colors.red,
               ),
-              onPressed: () {}),
+              onPressed: () async {
+                await toggleAttendance(context,'absent',name);
+              }),
         ],
         child: Container(
             width: size.width * 0.3,
