@@ -60,20 +60,20 @@ class _StudentHomePageState extends State<StudentHomePage> {
                             ),
                             IconButton(
                                 onPressed: () async {
-                                  await FirebaseAuth.instance.signOut();
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeScreen()),
-                                      (route) => false);
-
+                                  // await FirebaseAuth.instance.signOut();
                                   // Navigator.pushAndRemoveUntil(
                                   //     context,
                                   //     MaterialPageRoute(
                                   //         builder: (context) =>
-                                  //             const TrialScreen()),
+                                  //             const HomeScreen()),
                                   //     (route) => false);
+
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const TrialScreen()),
+                                      (route) => false);
                                 },
                                 icon: Icon(
                                   Icons.logout_outlined,

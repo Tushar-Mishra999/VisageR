@@ -11,37 +11,115 @@ class TrialScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        body: SafeArea(
-      child: Column(children: [
-        Row(
-          children: [
-            Container(
-              width: size.width * 0.5,
-              height: size.width * 0.5,
-              color: Colors.green,
-            ),
-            FittedBox(
-              child: SizedBox(
-                width: size.width * 0.5,
-                height: size.width * 0.5,
-                child: CustomPaint(
-                  painter: CurvePainter(),
-                  child: Container(),
-                ),
-              ),
-            ),
-          ],
+      backgroundColor: Colors.grey.shade900,
+      body: Center(
+          child: NeumorphicButton(
+        onTap: () {},
+        child: Image.asset(
+          'assets/apple.png',
+          height: 80,
+          color: Colors.grey[700],
         ),
-        Row(children: [
-          Spacer(),
-          Container(
-            width: size.width * 0.5,
-            height: size.width * 0.5,
-            color: Colors.green,
-          ),
-        ])
-      ]),
-    ));
+        BorderRadius: 12,
+        bottomRightShadowBlurRadius: 15,
+        bottomRightShadowSpreadRadius: 1,
+        borderWidth: 5,
+        backgroundColor: Colors.grey.shade900,
+        topLeftShadowBlurRadius: 15,
+        topLeftShadowSpreadRadius: 1,
+        topLeftShadowColor: Colors.grey.shade800,
+        bottomRightShadowColor: Colors.black,
+        height: size.width * 0.5,
+        width: size.width * 0.5,
+        padding: EdgeInsets.all(50),
+        bottomRightOffset: Offset(5, 5),
+        topLeftOffset: Offset(-5, -5),
+      )),
+    );
+  }
+}
+
+class NeumorphicButton extends StatefulWidget {
+  const NeumorphicButton(
+      {Key? key,
+      required this.width,
+      required this.height,
+      required this.child,
+      this.padding,
+      this.margin,
+      required this.backgroundColor,
+      required this.BorderRadius,
+      this.boxShape,
+      required this.bottomRightShadowColor,
+      required this.bottomRightShadowBlurRadius,
+      required this.bottomRightShadowSpreadRadius,
+      required this.topLeftShadowColor,
+      required this.topLeftShadowBlurRadius,
+      required this.topLeftShadowSpreadRadius,
+      required this.onTap,
+      required this.borderWidth,
+      this.borderColor,
+      this.gradientColors,
+      required this.topLeftOffset,
+      required this.bottomRightOffset})
+      : super(key: key);
+  final double width;
+  final double height;
+  final Widget child;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final Color backgroundColor;
+  final double BorderRadius;
+  final BoxShape? boxShape;
+  final Color bottomRightShadowColor;
+  final double bottomRightShadowBlurRadius;
+  final double bottomRightShadowSpreadRadius;
+  final Color topLeftShadowColor;
+  final double topLeftShadowBlurRadius;
+  final Offset topLeftOffset;
+  final Offset bottomRightOffset;
+  final double topLeftShadowSpreadRadius;
+  final Function onTap;
+  final double? borderWidth;
+  final Color? borderColor;
+  final List<Color>? gradientColors;
+  @override
+  State<NeumorphicButton> createState() => _NeumorphicButtonState();
+}
+
+class _NeumorphicButtonState extends State<NeumorphicButton> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap(),
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        child: widget.child,
+        padding: widget.padding ?? EdgeInsets.all(15),
+        margin: widget.margin ?? EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            color: widget.backgroundColor,
+            borderRadius: BorderRadius.circular(widget.BorderRadius),
+            shape: widget.boxShape ?? BoxShape.rectangle,
+            border: Border.all(
+              width: widget.borderWidth ?? 0,
+              color: widget.borderColor ?? widget.backgroundColor,
+            ),
+            boxShadow: [
+              BoxShadow(
+                  color: widget.bottomRightShadowColor,
+                  offset: widget.bottomRightOffset,
+                  blurRadius: widget.bottomRightShadowBlurRadius,
+                  spreadRadius: widget.bottomRightShadowSpreadRadius),
+              BoxShadow(
+                  color: widget.topLeftShadowColor,
+                  offset: widget.topLeftOffset,
+                  blurRadius: widget.topLeftShadowBlurRadius,
+                  spreadRadius: widget.topLeftShadowSpreadRadius),
+            ]),
+      ),
+    );
   }
 }
 
